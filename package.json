@@ -10,12 +10,19 @@
     "init": "npm i && npm run build && npm link",
     "build": "tsc",
     "build:watch": "tsc --watch",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest",
+    "test:watch": "jest --watch"
   },
   "author": "kyrsten.kelly@gmail.com",
   "license": "ISC",
   "dependencies": {
-    "chalk": "^4.1.1",
+    "chalk": "^4.1.1"
+  },
+  "devDependencies": {
+    "@types/jest": "^26.0.23",
+    "@types/node": "^15.12.2",
+    "jest": "^27.0.4",
+    "ts-jest": "^27.0.3",
     "typescript": "^4.3.2"
   }
 }
