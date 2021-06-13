@@ -4,7 +4,7 @@
   "description": "Jane coding challenge",
   "main": "index.ts",
   "bin": {
-    "top-teams": "./bin/top-teams.js"
+    "league-data": "./bin/league-data.js"
   },
   "scripts": {
     "init": "npm i && npm run build && npm link",

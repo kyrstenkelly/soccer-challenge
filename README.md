@@ -12,7 +12,7 @@ npm run init
 
 Run the command:
 ```bash
-top-teams [filePath]
+league-data [filePath]
 ```
 
 `[filePath]` - Path to the input file. Input file is expected to be a CSV of match data.
