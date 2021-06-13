@@ -27,7 +27,7 @@ interface TeamPoints {
  */
 class LeagueData {
   currentMatchDay: number = 1;
-  lineNumber: number = 0;
+  lineNumber: number = 1;
   teamPoints: TeamPoints = {};
 
   constructor(readStream?: ReadStream) {

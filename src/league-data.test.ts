@@ -40,12 +40,12 @@ describe('leagueData', () => {
     });
 
     test('it iterates the line number', () => {
-      leagueData.handleLine('kittens 1, puppies 1');
       expect(leagueData.lineNumber).toBe(1);
       leagueData.handleLine('kittens 1, puppies 1');
       expect(leagueData.lineNumber).toBe(2);
       leagueData.handleLine('kittens 1, puppies 1');
       expect(leagueData.lineNumber).toBe(3);
+      leagueData.handleLine('kittens 1, puppies 1');
     });
 
     test('it detects when we have cycled through teams and iterates the current match day', () => {
