@@ -20,6 +20,18 @@ const mockFailedWriteStream = {
 };
 
 describe('logger', () => {
+  describe('#info', () => {
+    test('it passes a message along to the console and colors it yellow', () => {
+      const consoleSpy = jest.spyOn(console, 'log').mockImplementation(() => {})
+      const message = 'Test Message'
+      logger.info(message);
+
+      expect(consoleSpy).toHaveBeenCalled();
+      const consoleArgs = consoleSpy.mock.calls[0] ? consoleSpy.mock.calls[0][0] : null;
+      expect(consoleArgs).toContain(message);
+    })
+  });
+
   describe('#warn', () => {
     test('it passes a message along to the console and colors it yellow', () => {
       const consoleSpy = jest.spyOn(console, 'warn').mockImplementation(() => {})

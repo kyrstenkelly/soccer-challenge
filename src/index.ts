@@ -1,4 +1,4 @@
-import readline from 'readline';
+import LeagueData from './league-data';
 import { logger, safeReadStream } from './utils';
 
 /**
@@ -14,13 +14,9 @@ const start = async () => {
 
   try {
     const filePath = args[0] as string;
-    const readInterface = readline.createInterface({
-      input: await safeReadStream(filePath),
-    });
+    const readStream = await safeReadStream(filePath)
 
-    readInterface.on('line', function(line) {
-      console.log(line);
-    });
+    new LeagueData(readStream);
   } catch (e) {
     logger.error(`Problem reading file: \n${e}`);
   }
