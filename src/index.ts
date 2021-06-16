@@ -3,7 +3,7 @@ import { logger, safeReadStream } from './utils';
 
 /**
  * Parse arguments, read file, and pass to
- * TopTeams handler
+ * LeagueData handler
  */
 const start = async () => {
   const args = process.argv.slice(2);

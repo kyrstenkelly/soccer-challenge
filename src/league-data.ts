@@ -41,42 +41,48 @@ class LeagueData {
     }
   }
 
+  /**
+   * Parse the line, calculate points, and append
+   * to the teams' points arrays.
+   *
+   * If a team's array length has exceeded the current
+   * match day, we know we've reached a new match day.
+   */
   handleLine(line: string) {
     const goals = this.parseGoals(line);
     const points = this.calculatePoints(goals);
 
     points.forEach(({ team, points }) => {
-      const existingTeamData = this.teamPoints[team];
+      const existingTeamData = this.teamPoints[team] || [];
+      const newTeamData = [...existingTeamData, points];
 
-      if (!existingTeamData) {
-        this.teamPoints[team] = [points];
-        return
-      }
-
-      if (existingTeamData.length === this.currentMatchDay) {
+      if (newTeamData.length > this.currentMatchDay) {
         this.logTopTeams();
         this.currentMatchDay++;
       }
 
-      this.teamPoints[team] = [...existingTeamData, points];
+      this.teamPoints[team] = newTeamData;
     });
 
     this.lineNumber++;
   }
 
+  /**
+   * Split a match data line into a consumable object detailing
+   * the two teams and their goals for the given match.
+   */
   parseGoals(line: string): GameGoals {
-    const teamResults = line.split(',');
+    const teamResults = line.split(',').map(t => t.trim());
 
     if (teamResults.length !== 2) {
       logger.error(`Please check the formatting of your file on line ${this.lineNumber}`);
-      process.exit()
+      process.exit();
     }
 
     const formattedTeamResults = teamResults.map((result: string) => {
-      result = result.trim();
-      const finalSpaceIndex = result.lastIndexOf(' ');
-      const teamName = result.substring(0, finalSpaceIndex);
-      let goals = result.substring(finalSpaceIndex + 1, result.length);
+      const teamParts = result.split(' ');
+      const goals = `${teamParts.pop()}`;
+      const teamName = teamParts.join(' ');
 
       try {
         return { team: teamName, goals: parseInt(goals) }
@@ -95,8 +101,8 @@ class LeagueData {
   }
 
   /**
-   * Takes the number of goals made by each team in a match,
-   * and returns the number of points each team received.
+   * Takes the goals for a given game and convets them
+   * to the points each team should receive.
    */
   calculatePoints(game: GameGoals): GamePoints {
     const tieGame = game.teamOneGoals === game.teamTwoGoals;
@@ -114,6 +120,10 @@ class LeagueData {
     }];
   }
 
+  /**
+   * Iterate over team points and log the top 3 teams (sorted by
+   * points, and then alphabetically) for the current match day.
+   */
   logTopTeams() {
     logger.info(`Matchday ${this.currentMatchDay}`);
 
