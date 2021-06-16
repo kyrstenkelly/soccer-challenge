@@ -7,7 +7,7 @@
     "league-data": "./bin/league-data.js"
   },
   "scripts": {
-    "init": "npm i && npm run build && npm link",
+    "init": "nvm use && npm i && npm run build && npm link",
     "build": "tsc",
     "build:watch": "tsc --watch",
     "test": "jest",
